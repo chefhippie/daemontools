@@ -135,8 +135,6 @@ action :kill do
   end
 end
 
-protected
-
 def svc_execute(command)
   execute "daemontools_#{new_resource.name}_#{command.sub("-", "")}" do
     command "svc #{command} #{svc_roots.join(" ")}"
