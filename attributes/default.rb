@@ -22,15 +22,12 @@ default["daemontools"]["packages"] = value_for_platform_family(
     daemontools
     daemontools-run
   ),
-  "ubuntu" => %w(
-    daemontools
-    daemontools-run
-  ),
   "suse" => %w(
     daemontools
   )
 )
 
+default["daemontools"]["zypper"]["enabled"] = true
 default["daemontools"]["zypper"]["alias"] = "utilities"
 default["daemontools"]["zypper"]["title"] = "Utilities"
 default["daemontools"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/utilities/openSUSE_#{node["platform_version"]}/"

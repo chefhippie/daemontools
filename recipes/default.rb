@@ -27,6 +27,10 @@ when "suse"
     title node["daemontools"]["zypper"]["title"]
 
     action :add
+
+    only_if do
+      node["daemontools"]["zypper"]["enabled"]
+    end
   end
 end
 
