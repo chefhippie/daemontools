@@ -27,8 +27,22 @@ default["daemontools"]["packages"] = value_for_platform_family(
   )
 )
 
-default["daemontools"]["zypper"]["enabled"] = true
-default["daemontools"]["zypper"]["alias"] = "utilities"
-default["daemontools"]["zypper"]["title"] = "Utilities"
-default["daemontools"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/utilities/openSUSE_#{node["platform_version"]}/"
-default["daemontools"]["zypper"]["key"] = "#{node["daemontools"]["zypper"]["repo"]}repodata/repomd.xml.key"
+case node["platform_family"]
+when "suse"
+  repo = case node["platform_version"]
+  when /\A13\.\d+\z/
+    "openSUSE_#{node["platform_version"]}"
+  when /\A42\.\d+\z/
+    "openSUSE_Leap_#{node["platform_version"]}"
+  when /\A\d{8}\z/
+    "openSUSE_Tumbleweed"
+  else
+    raise "Unsupported SUSE version"
+  end
+
+  default["daemontools"]["zypper"]["enabled"] = true
+  default["daemontools"]["zypper"]["alias"] = "utilities"
+  default["daemontools"]["zypper"]["title"] = "Utilities"
+  default["daemontools"]["zypper"]["repo"] = "http://download.opensuse.org/repositories/utilities/#{repo}/"
+  default["daemontools"]["zypper"]["key"] = "#{node["daemontools"]["zypper"]["repo"]}repodata/repomd.xml.key"
+end
